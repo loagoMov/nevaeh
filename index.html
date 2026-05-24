@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nina &amp; I</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Screen 1: Login -->
+    <div id="login-screen" class="screen active">
+        <div class="login-container">
+            <h1>Sign In</h1>
+            <input type="password" id="password-input" placeholder="Password">
+            <button id="login-btn">Sign In</button>
+            <p id="login-error" class="error-msg"></p>
+        </div>
+    </div>
+
+    <!-- Screen 1.5: Welcome -->
+    <div id="welcome-screen" class="screen">
+        <h1 class="floating-text">Welcome to Nevaeh</h1>
+    </div>
+
+    <!-- Screen 2: Profiles -->
+    <div id="profiles-screen" class="screen">
+        <h1>Who's watching?</h1>
+        <div class="profiles-container">
+            <div class="profile" id="us-profile">
+                <!-- Using one of the images as the profile picture -->
+                <img src="Images/IMG_7371.JPG" alt="us">
+                <p>us</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 3: Slideshow -->
+    <div id="slideshow-screen" class="screen">
+        <img id="slideshow-img" src="" alt="slideshow">
+    </div>
+
+    <!-- Screen 4: First Paragraph -->
+    <div id="paragraph-screen" class="screen">
+        <div class="paragraph-container">
+            <p id="final-paragraph">
+                Hey, how are you? Happy Month-aversary my girl. Loving you has been sooooo beautiful. It has come with its rough moments, happy moments, sad moments, great moments, but I wouldn't have it any other way. With you by my side, life is easier, simpler. Im writing this with a painful heart, but I know that we will make it out, I believe in us and I want wait to build with you.<br><br>
+                I fell in love with you because you made me feel like I was special. i fell in love with you because with you, I can be who I really am. I fell in love with you because you love me for who I am. I fell in love with you because you support me in what I do. I fell in love with you because you respect me and the choices I make. I fell in love with you because you make me feel like I can do anything, as long as I believe in it. I fell in love with you because you are my other crazy half. I fell in love with you because you accept me the way I am. I fell in love with you because you make me feel wanted and loved. you are amazing, beautiful, stunning, perfect... you are everything I ever wanted and I hope I get to spend a lot more time with you and then some more.<br><br>
+                love.mov
+            </p>
+            <button id="continue-btn" class="continue-btn">Continue the journey</button>
+        </div>
+    </div>
+
+    <!-- Screen 5: Second Slideshow -->
+    <div id="slideshow2-screen" class="screen">
+        <img id="slideshow2-img" src="" alt="slideshow">
+        <video id="slideshow2-video" playsinline style="display: none;"></video>
+    </div>
+
+    <!-- Screen 6: Final Paragraph -->
+    <div id="paragraph2-screen" class="screen">
+        <div class="paragraph-container">
+            <p id="final-paragraph2">
+                Happy monthaversary, my love. They say that the strongest foundations are built through the toughest times, and I truly believe that's where we are right now. My love for you has only grown because I've seen what we're capable of when we truly listen to each other. I'm so grateful for your presence in my life, and I'm fully committed to us being the best partners we can possibly be. Here's to us, our growth, and everything we're going to achieve together.
+            </p>
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bg-music" preload="auto" loop>
+        <source src="downloads/Blueberry Skies - Chirai (Lyrics).mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

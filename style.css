@@ -1,0 +1,243 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #ffb6c1, #e8d0b3); /* Gradient pink to very light brown */
+    color: #fff;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3); /* Ensure white text is readable over lighter backgrounds */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 10;
+}
+
+/* Login Screen */
+.login-container {
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 60px 68px 40px;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container h1 {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 28px;
+    text-align: left;
+}
+
+.login-container input {
+    background: #333;
+    border: 0;
+    border-radius: 4px;
+    color: #fff;
+    height: 50px;
+    line-height: 50px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+.login-container input:focus {
+    outline: none;
+    background: #444;
+}
+
+.login-container button {
+    background: #e50914; /* Netflix red */
+    border: 0;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 24px;
+    padding: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.login-container button:hover {
+    background: #f40612;
+}
+
+.error-msg {
+    color: #e87c03; /* Netflix orange error */
+    font-size: 13px;
+    margin-top: 10px;
+    text-align: left;
+    min-height: 15px;
+}
+
+/* Welcome Screen */
+.floating-text {
+    font-size: 5vw;
+    font-weight: 300;
+    opacity: 0;
+    transform: translateY(80px);
+}
+
+.screen.active .floating-text {
+    animation: floatUp 3.5s ease forwards;
+}
+
+@keyframes floatUp {
+    0% { opacity: 0; transform: translateY(80px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-50px); }
+}
+
+/* Profiles Screen */
+#profiles-screen h1 {
+    font-size: 3.5vw;
+    font-weight: 400;
+    margin-bottom: 2em;
+}
+
+.profiles-container {
+    display: flex;
+    justify-content: center;
+    gap: 2vw;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profile img {
+    width: 10vw;
+    height: 10vw;
+    max-width: 200px;
+    max-height: 200px;
+    min-width: 84px;
+    min-height: 84px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 3px solid transparent;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.profile:hover img {
+    border-color: #fff;
+}
+
+.profile:active img {
+    transform: scale(0.9);
+}
+
+.profile p {
+    color: grey;
+    font-size: 1.3vw;
+    margin-top: 0.8em;
+    transition: color 0.2s ease;
+}
+
+.profile:hover p {
+    color: #fff;
+}
+
+/* Slideshow Screen */
+#slideshow-screen {
+    background-color: #000;
+}
+
+#slideshow-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: opacity 1s ease-in-out;
+    opacity: 0;
+}
+
+/* Paragraph Screen */
+.paragraph-container {
+    max-width: 800px;
+    width: 90%;
+    padding: 40px;
+    font-size: clamp(16px, 2vw, 24px);
+    line-height: 1.6;
+    text-align: center;
+    font-weight: 300;
+    max-height: 90vh; /* Constrains height to screen size */
+    overflow-y: auto; /* Makes the paragraph scrollable */
+    border-radius: 8px; /* Optional slight rounding if they scroll */
+}
+
+/* Continue Button */
+.continue-btn {
+    background: linear-gradient(135deg, #e50914, #ff6b6b);
+    border: none;
+    border-radius: 50px;
+    color: #fff;
+    font-size: clamp(14px, 1.8vw, 20px);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 16px 48px;
+    margin-top: 40px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 20px rgba(229, 9, 20, 0.3);
+    animation: btnPulse 2.5s ease-in-out infinite;
+}
+
+.continue-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 30px rgba(229, 9, 20, 0.5);
+}
+
+.continue-btn:active {
+    transform: scale(0.97);
+}
+
+@keyframes btnPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(229, 9, 20, 0.3); }
+    50% { box-shadow: 0 4px 30px rgba(229, 9, 20, 0.55); }
+}
+
+/* Second Slideshow Screen */
+#slideshow2-screen {
+    background-color: #000;
+}
+
+#slideshow2-img, #slideshow2-video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: opacity 1s ease-in-out;
+    opacity: 0;
+}
+
