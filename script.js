@@ -1,4 +1,4 @@
-// Store all the images found in the Images directory
+// Store all the images found in the Images directory (sorted chronologically)
 const images = [
     "Images/IMG_7371.JPG",
     "Images/IMG_7637.JPG",
@@ -7,33 +7,33 @@ const images = [
     "Images/IMG_7950.JPG",
     "Images/IMG_8213.JPG",
     "Images/IMG_8226.JPG",
+    "Images/cpm35 2026-04-10 1517543E94BB4A636D.JPG",
     "Images/IMG_8248.JPG",
     "Images/IMG_8643.JPG",
-    "Images/IMG_9226.JPG",
-    "Images/IMG_9306.JPG",
-    "Images/IMG_9853.JPG",
-    "Images/cpm35 2026-04-10 1517543E94BB4A636D.JPG",
     "Images/cpm35 2026-04-26 122448106F21C25BE4.JPG",
     "Images/cpm35 2026-05-01 1831510E8D589B9E31.JPG",
     "Images/cpm35 2026-05-01 183204E1073066CDBB.JPG",
+    "Images/IMG_9226.JPG",
+    "Images/IMG_9306.JPG",
     "Images/cpm35 2026-05-01 184347BC147FE431E1.JPG",
     "Images/cpm35 2026-05-01 184524DE4490355951.JPG",
-    "Images/cpm35 2026-05-04 142453BC6913715072.JPG"
+    "Images/cpm35 2026-05-04 142453BC6913715072.JPG",
+    "Images/IMG_9853.JPG"
 ];
 
-// Second slideshow images — add your images from Images/second/ here
+// Second slideshow images (sorted chronologically)
 const images2 = [
-    "Images/second/D69A1146-94B6-4FDF-B191-3980807C4DD8.JPG",
     "Images/second/IMG_7350.MP4",
     "Images/second/IMG_7635.JPG",
     "Images/second/IMG_7636.JPG",
     "Images/second/IMG_7662.JPG",
     "Images/second/IMG_7682.JPG",
     "Images/second/IMG_7915.JPG",
+    "Images/second/RenderedImage.JPEG",
+    "Images/second/D69A1146-94B6-4FDF-B191-3980807C4DD8.JPG",
     "Images/second/IMG_8244.JPG",
     "Images/second/IMG_8362.JPG",
     "Images/second/IMG_9417.JPG",
-    "Images/second/RenderedImage.JPEG",
     "Images/second/cpm35 2026-05-04 142453BC6913715072.JPG"
 ];
 
@@ -125,35 +125,43 @@ function startSlideshow() {
     const slideDuration = 4000; // 4 seconds total per slide
     const fadeDuration = 1000; // 1 second for fading out (must match CSS transition time)
 
-    // Show the first image right away
-    slideshowImg.src = images[currentIndex];
-    
-    // Slight delay to ensure the image is loaded and opacity transition applies properly
-    setTimeout(() => {
-        slideshowImg.style.opacity = 1;
-    }, 50);
+    function showNext() {
+        if (currentIndex >= images.length) {
+            switchScreen(slideshowScreen, paragraphScreen);
+            return;
+        }
 
-    const slideInterval = setInterval(() => {
-        // Fade out current image
-        slideshowImg.style.opacity = 0;
-
-        // Wait for fade out to complete, then change the image source
-        setTimeout(() => {
-            currentIndex++;
-            
-            // Check if we've reached the end of the images
-            if (currentIndex >= images.length) {
-                clearInterval(slideInterval);
-                switchScreen(slideshowScreen, paragraphScreen);
-                return;
-            }
-            
-            // Update source and fade in
-            slideshowImg.src = images[currentIndex];
+        const nextImgUrl = images[currentIndex];
+        
+        // Create a temporary image object to preload
+        const tempImg = new Image();
+        tempImg.src = nextImgUrl;
+        
+        tempImg.onload = () => {
+            // Once loaded, set the source and fade in
+            slideshowImg.src = nextImgUrl;
             slideshowImg.style.opacity = 1;
-        }, fadeDuration);
 
-    }, slideDuration);
+            // Wait for slideDuration, then fade out and show next
+            setTimeout(() => {
+                slideshowImg.style.opacity = 0;
+                setTimeout(() => {
+                    currentIndex++;
+                    showNext();
+                }, fadeDuration);
+            }, slideDuration);
+        };
+        
+        tempImg.onerror = () => {
+            console.error("Failed to load image: " + nextImgUrl);
+            // Skip to next image on error so it doesn't get stuck
+            currentIndex++;
+            showNext();
+        };
+    }
+
+    // Show the first image
+    showNext();
 }
 
 // 4. Handle "Continue the journey" button
@@ -236,21 +244,32 @@ function startSlideshow2() {
                 slideshow2Video.style.display = 'none';
             }, fadeDuration);
             
-            slideshow2Img.style.display = 'block';
-            slideshow2Img.src = currentItem;
-            
-            setTimeout(() => {
-                slideshow2Img.style.opacity = 1;
-            }, 50);
-
-            // Display for slideDuration, then transition
-            setTimeout(() => {
-                slideshow2Img.style.opacity = 0;
+            // Preload the image
+            const tempImg = new Image();
+            tempImg.src = currentItem;
+            tempImg.onload = () => {
+                slideshow2Img.style.display = 'block';
+                slideshow2Img.src = currentItem;
+                
                 setTimeout(() => {
-                    currentIndex++;
-                    showNext();
-                }, fadeDuration);
-            }, slideDuration);
+                    slideshow2Img.style.opacity = 1;
+                }, 50);
+
+                // Display for slideDuration, then transition
+                setTimeout(() => {
+                    slideshow2Img.style.opacity = 0;
+                    setTimeout(() => {
+                        currentIndex++;
+                        showNext();
+                    }, fadeDuration);
+                }, slideDuration);
+            };
+            
+            tempImg.onerror = () => {
+                console.error("Failed to load image: " + currentItem);
+                currentIndex++;
+                showNext();
+            };
         }
     }
 
